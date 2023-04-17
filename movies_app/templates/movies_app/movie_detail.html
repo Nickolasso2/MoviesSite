@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load my_tags %}
+{% block content %}
+
+
+<div class="left-ads-display col-lg-9">
+    <div class="row">
+        <div class="row-md-4 product-men">
+            <div class="product-shoe-info editContent text-center mt-lg-4">
+                <div class="men-thumb-item">
+                    <img src="{{ movie.poster.url }}" class="img-fluid" alt="">
+                </div>
+                <div class="item-info-product">
+                    <h4 class="">
+                        <a href="{{ movie.get_absolute_url }}" class="editContent">
+                            {{ movie.title }}
+                        </a>
+                    </h4>
+                    <div class="product_price">
+                        <div class="grid-price">
+                            <span class="money editContent">{{ movie.tagline }}</span>
+                        </div>
+                    </div>
+                    <div class="product_price">
+                        <div class="grid-price">
+                            <span class="money editContent">{{ movie.country }}</span>
+                        </div>
+                    </div>
+                    <div class="product_price">
+                        <div class="grid-price">
+                            <span class="money editContent">{{ movie.year }}</span>
+                        </div>
+                    </div>
+                    <div class="product_price">
+                        <div class="grid-price">
+                            <span class="money editContent">{{ movie.description|safe}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% rating object %}
+        </div>
+
+    </div>
+    <!-- rating form to display rating stars -->
+    <form action="{% url 'rating' %}" name="rating">
+        <b>Rate {{object}}</b>
+        {% csrf_token %}
+
+        <input type="hidden" value="{{ movie.id }}" name="movie">
+        <span class="rating">
+
+            {% for k, v in star_form.fields.star.choices %}
+            <!-- дані типу {choice_id:choice_value} -->
+
+            {% if v|add:"0" == star_given %}
+            <!-- choices values are string type. |add:"0" mekes them to interger-->
+            <input id="rating{{ v }}" type="radio" name="star" value="{{ k }}" checked>
+            <!-- the view needs a foreign key model instance so the choise_id should be passed -->
+            <label for="rating{{ v }}" class="estimated"></label>
+            {% else %}
+            <input id="rating{{ v }}" type="radio" name="star" value="{{ k }}">
+            <label for="rating{{ v }}"></label>
+
+            {% endif %}
+            {% endfor %}
+        </span>
+
+    </form>
+</div>
+{% endblock %}
+
+{% block comments %}
+
+
+<!-- review form with mptt -->
+<form action="{% url 'add_comment_mptt' object.pk %}" method="post" id="review_form_mptt">
+    {% csrf_token %}
+    <input type="hidden" name="parent" id="parent_mptt">
+    {{form_mptt.as_p}}
+    <div class="validationCheck"></div>
+    <button type="submit">Залишити відгук</button>
+</form>
+
+
+<!-- mptt reviews display -->
+{% load mptt_tags %}
+<ul id="recursetree">
+    {% recursetree object.reviewviamptt_set.all %}
+    <li>
+        <div class="comment alert alert-info" id="{{node.id}}">
+            <h3>{{node.name}}</h3>
+            <h4>{{node.created_at|date:"d/m/Y H:i:s"}}</h4>
+            <p>{{node.text}}</p>
+        </div>
+        <a href="#review_form_mptt_new" onclick="reactCommentMptt('{{node.id}}')">Відреагувати</a>
+        {% if not node.is_leaf_node %}
+        <ul class="children pl-2 pl-md-5 " style="list-style: None;">
+            {{ children }}
+        </ul>
+        {% endif %}
+    </li>
+    {% endrecursetree %}
+</ul>
+
+<script>
+// ==================rate the movie===================
+let rating_form = document.querySelector('form[name=rating]');
+rating_form.addEventListener('change', function () {
+    let data = new FormData(this);
+    fetch(`${this.action}`, {
+        method: 'POST',
+        body: data
+    }).then(alert('well'))
+        .catch(error => alert('153 some error'))
+
+})
+// ==================///rate the movie===================
+
+
+// new form to react to the existing comments
+function reactCommentMptt(parent_id) {
+    parent = document.getElementById(parent_id);
+    removeReviewFormMpttNew()
+    review_form_new = '<form action="' + review_form_mptt.action + '" method="post" id="review_form_mptt_new">\
+{% csrf_token %}\
+<input type="hidden" name="parent" id="' + parent_id + '" value="' + parent_id + '">\
+<p> <label for="id_name">Назва:</label>\
+<input type="text" name="name" maxlength="100" required="" id="id_name_new"> </p>\
+<p> <label for="id_email_new">Email:</label>\
+<input type="email" name="email" maxlength="254" required="" id="id_email_new"></p>\
+<p>  <label for="id_text_new">Повідомлення:</label>\
+<textarea name="text" cols="30" rows="10" maxlength="5000" required="" id="id_text_|new"></textarea> </p>\
+<div class="validationCheck"></div>\
+<button type="submit">Залишити відгук</button>\
+<button style="float:right" onclick="review_form_mptt_new.remove()"\ type="button">Закрити</button>\
+</form>'
+
+    parent.insertAdjacentHTML('beforeend', review_form_new)
+    review_form_mptt_new.addEventListener('submit', formCheck)
+}
+
+
+
+    // aadding review
+    // sending the review form from block content and getting JsonResponse
+
+    // ================================================
+    let formCheck = function (e) {
+        e.preventDefault()
+        let data = new FormData(this);
+        fetch(`${this.action}`, {
+            method: 'POST',
+            body: data
+        }).then(response => response.json())
+            .then(data => {
+                if (data.status == 'success') {
+                    this.reset();
+                    removeReviewFormMpttNew();
+                    let respond = '<li> <div class="comment alert alert-info" id="' + data.new_review_id + '">\
+                    <h3>' + data.name + '</h3>\
+                    <h4>' + data.created_at + '</h4>\
+                    <p>' + data.text + '</p>  </div>\
+                    <a href="#review_form_mptt_new" onclick="reactCommentMptt('+ data.new_review_id + ')">Відреагувати</a> </li>'
+
+                    let respondWithParent = '<ul class="children pl-2 pl-md-5" style="list-style: None;">' + respond + '</ul>';
+                    // let parent0Review = review;
+
+                    if (data.parent_review_id != '') {
+                        parent = document.getElementById(data.parent_review_id);
+                        parent.nextElementSibling.insertAdjacentHTML('afterend', respondWithParent);
+                    } else {
+                        document.getElementById('recursetree').insertAdjacentHTML('afterbegin', respond)
+                    }
+
+                }
+                this.getElementsByClassName('validationCheck')[0].innerText = data.valid;
+            })
+            .catch(error => alert(error))
+    }
+
+    function removeReviewFormMpttNew() {
+        if (document.getElementById('review_form_mptt_new')) {
+            review_form_mptt_new.remove()
+        }
+    }
+
+    review_form_mptt.addEventListener('submit', formCheck)
+    
+
+
+</script>
+{% endblock %}

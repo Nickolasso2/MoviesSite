@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="left-ads-display col-lg-9">
+    <div class="row">
+        {% for movie in object_list %}
+        <div class="col-md-4 product-men shadow-5">
+            <div class="product-shoe-info editContent text-center mt-lg-4 ">
+                <div class="men-thumb-item">
+                    <img src="{{ movie.poster.url }}"  class="img-fluid" alt="Тут має бути зображення постера фільму">
+                </div>
+                <div class="item-info-product">
+                    <h4 class="">
+                        <a href="{{ movie.get_absolute_url }}" class="editContent">
+                            {{ movie.title }}
+                        </a>
+                    </h4>
+                    <div class="product_price">
+                        <div class="grid-price">
+                            <span class="money editContent">{{ movie.tagline }}</span>
+                        </div>
+                    </div>
+                    <div class="product_price">
+                        <div class="grid-price">
+                            {% for genre in movie.genres.all %}
+                            <span class="money editContent">{{genre}}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="product_price">
+                        <div class="grid-price">
+                            <span class="money editContent">{{ movie.country }}</span>
+                        </div>
+                    </div>
+                    <div class="product_price">
+                        <div class="grid-price">
+                            <span class="money editContent">{{ movie.year }}</span>
+                        </div>
+                    </div>
+                    <div class="product_price">
+                        {% for actor in movie.actors.all %}
+                        <div class="grid-price">
+                            <a class="money editContent" href="{{actor.get_absolute_url}}">{{ actor }}</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="product_price">
+                        <div class="grid-price">
+                            <span class="money editContent">{{movie.description|safe|truncatechars:200}}</span>
+                        </div>
+                    </div>
+                    <div id="stars">
+                        {% rating movie %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+
+<script>
+    //setting up checkboxes into checked state after search submitted
+    const urlParams = new URLSearchParams(window.location.search);//The query string portion of the URL. This includes the question mark, and everything following, excluding the hash.
+
+    let getlistGenres = urlParams.getAll('genre');
+    let getlistYears = urlParams.getAll('year');
+    let checkboxes = document.getElementsByClassName('checked');
+    for (let i = 0; i < checkboxes.length; i++) {
+        if (getlistGenres.includes(String(checkboxes[i].value)) || getlistYears.includes(String(checkboxes[i].value))) {
+            checkboxes[i].checked = true;
+        }
+    };
+
+
+</script>
+
+{% endblock content %}
+

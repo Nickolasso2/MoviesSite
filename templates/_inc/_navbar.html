@@ -1,0 +1,132 @@
+{% load static %}
+{% load my_tags %}
+{% load contact_tags i18n %}
+
+<div id="page" class="page">
+  
+   <div style="background-image: url('{% static "movies_app/img/m.jpg" %}'); height: 40vw; position:relative " id="home">
+        <header class="header">
+            <div class="container-fluid px-lg-5">
+              <form action="{% url 'set_lang' %}" method="get">{% csrf_token %}
+      
+                <select name="language" onchange="this.form.submit()">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% get_available_languages as LANGUAGES %}
+                    {% get_language_info_list for LANGUAGES as languages %}
+                    {% for language in languages %}
+                    <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                        {{ language.name_local }} ({{ language.code }})
+                    </option>
+                    {% endfor %}
+                </select>
+                <input type="hidden" name="current_url" value="{{request.path}}">
+            </form>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light" id="nav">
+                <div id="logo">
+                    <h1 >MovieWorld  </h1>
+                </div>
+                <!-- nav -->
+                    <!-- Container wrapper -->
+                    <div class="container-fluid">
+                      <!-- Toggle button -->
+                      <button
+                        class="navbar-toggler"
+                        type="button"
+                        data-mdb-toggle="collapse"
+                        data-mdb-target="#navbarLeftAlignExample"
+                        aria-controls="navbarLeftAlignExample"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                      >
+                        <i class="fas fa-bars"></i>
+                      </button>
+                  
+                      <!-- Collapsible wrapper -->
+                      <div class="collapse navbar-collapse" id="navbarLeftAlignExample" style="justify-content: flex-end;">
+                        <!-- Left links -->
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                          <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/">Home</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                          </li>
+                          <!-- Navbar dropdown -->
+                          <li class="nav-item dropdown">
+                            <a
+                              class="nav-link dropdown-toggle"
+                              href="#"
+                              id="navbarDropdown"
+                              role="button"
+                              data-mdb-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              Categories
+                            </a>
+                            <!-- Dropdown menu -->
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                {% for category in categories %}
+                                
+                                <li>
+                                    <a class="dropdown-item" href="{{category.get_absolute_url}}">{{ category.name }}</a>
+                                </li>
+                                {% endfor %}
+                                
+                              <li><hr class="dropdown-divider" /></li>
+                              <li>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link disabled"
+                              >Disabled</a
+                            >
+                          </li>
+                          
+                        
+                            {% if user.is_authenticated %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'account_logout' %}">Log out</a></li>
+                        {% else %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'account_login' %}">Log in</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'account_signup' %}">Sign up</a></li>
+                        {% endif %}
+                        </ul>
+                        <!-- Left links -->
+                      </div>
+                      <!-- Collapsible wrapper -->
+                    </div>
+                    <!-- Container wrapper -->
+                  </nav>
+                <nav class="py-4">
+                    
+
+                    
+                            
+
+                            
+                                
+                            
+                         
+                                
+                            </ul>
+                            
+                        </li>
+                        
+                    </ul>
+                </nav>
+
+            </div>
+        </header>
+
+        <div class="banner-info">
+            <p class="editContent"><b>{% trans 'Movie World' %}</b></p>
+            <h1 class="mb-4 editContent"><b>{% trans 'All about cinema' %}</b></h1>
+            <div class="ban-buttons">
+
+
+            </div>
+        </div>
+
+
+    </div>
