@@ -9,6 +9,8 @@ class ReviewFormMptt(forms.ModelForm):
     class Meta:
         model = ReviewViaMptt
         fields = ('name', 'email', 'text')
+        widgets = {'text':forms.Textarea(attrs={'rows':'5'})}
+
 
 
 class RatingForm(forms.ModelForm):

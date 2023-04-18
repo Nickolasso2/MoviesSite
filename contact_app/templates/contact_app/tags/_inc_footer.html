@@ -5,6 +5,7 @@ rendered with include tag
 {% load my_tags %}
 {% categories as categories %}
 {% genres as genres %}
+
 <!-- Footer -->
 
 <footer class="bg-dark text-center text-white">
@@ -144,14 +145,7 @@ rendered with include tag
     </div>
   </footer>
   
-<script>
-  subscriptionButton.addEventListener("mouseenter", function(event){
-    
-    let contentBlockHTML = contentBlock.innerHTML;
-contentBlockTextArea.value = contentBlockHTML;
 
-  });
-</script>
 <script>
   function checkSubscriptionForm(e){
     e.preventDefault();

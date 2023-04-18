@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount', #не задіяно
     'allauth.socialaccount.providers.google',#не задіяно
+    "crispy_forms",
+    "crispy_bootstrap5",
 ]
 
 MIDDLEWARE = [
@@ -276,3 +278,8 @@ EMAIL_HOST_PASSWORD = 'scehsmdqmdeyzfom'
 # ACCOUNT_LOGOUT_ON_GET= True
 # ACCOUNT_UNIQUE_EMAIL = True
 # ACCOUNT_EMAIL_REQUIRED = True
+
+
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"

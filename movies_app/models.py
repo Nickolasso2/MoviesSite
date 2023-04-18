@@ -127,8 +127,8 @@ class Rating(models.Model):
 
 class ReviewViaMptt(MPTTModel):
     email = models.EmailField()
-    name = models.CharField('Назва', max_length=100)
-    text = models.TextField(verbose_name='Повідомлення', max_length=5000)
+    name = models.CharField(max_length=100)
+    text = models.TextField(max_length=5000)
     parent = TreeForeignKey('self', verbose_name='батько', on_delete=models.SET_NULL, null=True, blank=True, related_name='children')
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, verbose_name='фільм')
     created_at = models.DateTimeField(auto_now_add=True)

@@ -81,7 +81,6 @@ class AddReviewMptt(View):
             review_object.save()
             row_format = "%d/%m/%Y %H:%M:%S"
             return JsonResponse({
-                'valid':'Дякуємо за відгук!5',
                 'status':"success",
                 'parent_review_id': request.POST.get('parent'),
                 'new_review_id': review_object.pk,
