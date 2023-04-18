@@ -32,6 +32,9 @@ class MoviesView(GenreYear, ListView):
     paginate_by=3
     template_name= 'movies_app/collected.html'
 
+    # def get_queryset(self):
+    #     return Movie.objects.all().prefetch_related('genres').select_related('category')
+
 class CategoryMovieList(MoviesView):
     def get_queryset(self):
         return Movie.objects.filter(category__url=self.kwargs['slug'])

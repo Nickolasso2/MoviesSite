@@ -4,6 +4,7 @@ from django.db.models import Avg
 
 register = template.Library()
 
+
 @register.inclusion_tag('movies_app/sidebar.html')
 def show_sidebar():
     genres = Genre.objects.all()
@@ -17,7 +18,8 @@ def categories():
 
 @register.simple_tag()
 def genres():
-    return  Genre.objects.all()
+    genres = Genre.objects.all()
+    return  genres
 
 @register.inclusion_tag('movies_app/star_rating.html')
 def rating(movie):

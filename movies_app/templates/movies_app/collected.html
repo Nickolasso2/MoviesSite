@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load my_tags %}
+
 {% block content %}
+
+{% genres as genres %}
+
 <div class="left-ads-display col-lg-9">
     <div class="row">
         {% for movie in object_list %}
@@ -22,10 +26,14 @@
                     </div>
                     <div class="product_price">
                         <div class="grid-price">
-                            {% for genre in movie.genres.all %}
+                            
+                            {% for genre in genres %}
                             <span class="money editContent">{{genre}}</span>
                             {% endfor %}
                         </div>
+                       
+                       
+                       
                     </div>
                     <div class="product_price">
                         <div class="grid-price">
