@@ -3,8 +3,6 @@
 
 {% block content %}
 
-{% genres as genres %}
-
 <div class="left-ads-display col-lg-9">
     <div class="row">
         {% for movie in object_list %}
@@ -46,6 +44,7 @@
                         </div>
                     </div>
                     <div class="product_price">
+                       
                         {% for actor in movie.actors.all %}
                         <div class="grid-price">
                             <a class="money editContent" href="{{actor.get_absolute_url}}">{{ actor }}</a>
@@ -58,7 +57,9 @@
                         </div>
                     </div>
                     <div id="stars">
+
                         {% rating movie %}
+                        
                     </div>
                 </div>
             </div>

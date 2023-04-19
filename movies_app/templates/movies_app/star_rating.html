@@ -1,7 +1,7 @@
 {% load static %}
 <div id="rating_star">Rating from our users:
     {% for i in 12345|make_list %}
-    {% if i|add:"0" <= star_rating %}
+    {% if i|add:"0" <= movie.rating %}
      
     <img src="{% static "movies_app/img/star-on-big.png" %}" alt="">
     {% else %}

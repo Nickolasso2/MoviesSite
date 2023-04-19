@@ -3,6 +3,7 @@
 {% load my_tags %}
 {% load contact_tags i18n %}
 {% categories as categories %}
+{% genres as genres %}
 
 
 <html lang="uk">
@@ -83,9 +84,13 @@ href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="
 
 
 <body style="padding: 15px; background-color: rgb(0 123 255 / 25%);">
-    {{categories.count}}
-       {% include '_inc/_navbar.html' %}
-<!-- форма пошуку по назві -->
+ 
+   <!-- {% for category in categories %}{% endfor %} -->
+    <!-- {% for genre in genres %}{% endfor %} -->
+    
+    {% include '_inc/_navbar.html' %}
+    
+    <!-- форма пошуку по назві -->
         <nav class="navbar bg-body-tertiary">
             <div class="container-fluid">
               <form class="d-flex" role="search" action="{% url 'search' %}" method="get">
@@ -98,11 +103,12 @@ href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="
 
 
         <div style="display:flex; justify-content: flex-start;">
-            {% show_sidebar %}
+            {% show_sidebar genres %}
         
             {% block content %}{% endblock %}
 
         </div>
+        
         {% block pagination %}
         {% include '_inc/_movies_pagination.html' %}
         {% endblock %}
@@ -110,7 +116,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="
         {% block comments %}{% endblock %}
 
         {% block footer %}
-            {% footer %}
+            {% footer categories genres %}
         {% endblock %}
 
         <!-- для переклду js тут не працює -->

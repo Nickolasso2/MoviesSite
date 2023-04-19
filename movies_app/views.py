@@ -32,8 +32,8 @@ class MoviesView(GenreYear, ListView):
     paginate_by=3
     template_name= 'movies_app/collected.html'
 
-    # def get_queryset(self):
-    #     return Movie.objects.all().prefetch_related('genres').select_related('category')
+    def get_queryset(self):
+        return Movie.objects.all().prefetch_related('actors', 'rating_set')
 
 class CategoryMovieList(MoviesView):
     def get_queryset(self):
@@ -60,7 +60,6 @@ class MovieDetail(DetailView):
         try:
             star_given = Rating.objects.get(ip=get_client_ip(self.request), movie=self.object).star.value
             # якщо get() не знаходить екземпляр моделі, то видає помилку 
-            print('star_given:', star_given)
             context['star_given'] = star_given
         except:
             context['star_given'] = 0

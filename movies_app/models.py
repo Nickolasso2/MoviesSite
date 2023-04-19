@@ -101,24 +101,25 @@ class MovieShot(models.Model):
         verbose_name_plural = 'Кадри'
 
 
-class RatingStar(models.Model):
-    value = models.PositiveSmallIntegerField('Значення', default=0)
+# class RatingStar(models.Model):
+#     value = models.PositiveSmallIntegerField('Значення', default=0)
 
-    def __str__(self) -> str:
-        return f'{self.value}'
+#     def __str__(self) -> str:
+#         return f'{self.value}'
 
-    class Meta:
-        verbose_name = 'Зірка рейтингу'
-        verbose_name_plural = 'Зірки рейтингу'
-        ordering = ['-value']
+#     class Meta:
+#         verbose_name = 'Зірка рейтингу'
+#         verbose_name_plural = 'Зірки рейтингу'
+#         ordering = ['-value']
 
 class Rating(models.Model):
     ip = models.CharField('ip адреса', max_length=15)
-    star = models.ForeignKey(RatingStar, on_delete=models.CASCADE, verbose_name='зірка')
+    value = models.PositiveSmallIntegerField('Значення', default=0)
+    # star = models.ForeignKey(RatingStar, on_delete=models.CASCADE, verbose_name='зірка')
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, verbose_name='фільм')
 
     def __str__(self) -> str:
-        return f'{self.star} - {self.movie}' 
+        return f'{self.value} - {self.movie}' 
 
     class Meta:
         verbose_name = 'Рейтинг'

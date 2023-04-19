@@ -6,8 +6,7 @@ register = template.Library()
 
 
 @register.inclusion_tag('movies_app/sidebar.html')
-def show_sidebar():
-    genres = Genre.objects.all()
+def show_sidebar(genres):
     years = [movie.year for movie in Movie.objects.all()]
     years_distinkt = [i for i in set(years)]
     return {'genres':genres, 'years':years_distinkt}
@@ -24,7 +23,7 @@ def genres():
 @register.inclusion_tag('movies_app/star_rating.html')
 def rating(movie):
       
-    return {'star_rating': movie.rating()}
+    return {'movie': movie}
 
   
 
