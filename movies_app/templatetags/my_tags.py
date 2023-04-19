@@ -1,5 +1,5 @@
 from django import template
-from movies_app.models import Genre, Movie, Category, Rating, RatingStar
+from movies_app.models import Genre, Movie, Category, Rating
 from django.db.models import Avg
 
 register = template.Library()

@@ -72,7 +72,7 @@ class Movie(models.Model):
     draft = models.BooleanField(default=False)
 
     def rating(self):
-        rating = [rating.star.value for rating in self.rating_set.all()]
+        rating = [rating.value for rating in self.rating_set.all()]
         return mean(rating)
 
     def __str__(self) -> str:

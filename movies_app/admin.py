@@ -61,7 +61,7 @@ admin.site.register(Actor, ActorAdmin)
 admin.site.register(Genre)
 admin.site.register(MovieShot)
 admin.site.register(Rating)
-admin.site.register(RatingStar)
+# admin.site.register(RatingStar)
 admin.site.register(ReviewViaMptt, MPTTModelAdmin)
 
 

@@ -1,6 +1,6 @@
 from dataclasses import fields
 from django import forms
-from .models import ReviewViaMptt, Rating, RatingStar
+from .models import ReviewViaMptt, Rating
 
 
 
@@ -12,9 +12,16 @@ class ReviewFormMptt(forms.ModelForm):
         widgets = {'text':forms.Textarea(attrs={'rows':'5'})}
 
 
-
+# adding rating
 class RatingForm(forms.ModelForm):
-    star = forms.ModelChoiceField(queryset=RatingStar.objects.all(), widget=forms.RadioSelect)#RadioSelect - input type="radio"
+    choices = [
+        (5,'5'),
+        (4,'4'),
+        (3,'3'),
+        (2,'2'),
+        (1,'1'),
+    ]
+    star = forms.ChoiceField(choices=choices, widget=forms.RadioSelect)#RadioSelect - input type="radio"
 
     class Meta:
         model = Rating

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% load my_tags %}
 {% block content %}
 {% load crispy_forms_tags %}
 
@@ -41,11 +41,14 @@
                     </div>
                 </div>
             </div>
-            {% rating object %}
+            {% rating movie %}   
+            
         </div>
 
     </div>
-    <!-- rating form to display rating stars -->
+
+
+    <!-- ===============================rating form to display rating stars -->
     <form action="{% url 'rating' %}" name="rating">
         <b>Rate {{object}}</b>
         {% csrf_token %}
@@ -57,6 +60,7 @@
             <!-- дані типу {choice_id:choice_value} -->
 
             {% if v|add:"0" == star_given %}
+            {{star_given}}
             <!-- choices values are string type. |add:"0" mekes them to interger-->
             <input id="rating{{ v }}" type="radio" name="star" value="{{ k }}" checked>
             <!-- the view needs a foreign key model instance so the choise_id should be passed -->
@@ -70,6 +74,9 @@
         </span>
 
     </form>
+    <!-- ===============================rating form to display rating stars -->
+
+
 </div>
 {% endblock %}
 

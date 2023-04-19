@@ -58,7 +58,7 @@ class MovieDetail(DetailView):
         
         
         try:
-            star_given = Rating.objects.get(ip=get_client_ip(self.request), movie=self.object).star.value
+            star_given = Rating.objects.get(ip=get_client_ip(self.request), movie=self.object).value
             # якщо get() не знаходить екземпляр моделі, то видає помилку 
             context['star_given'] = star_given
         except:
@@ -220,7 +220,7 @@ def rating(request):
     form = RatingForm(request.POST)
     
     if form.is_valid():
-        Rating.objects.update_or_create(ip=ip, movie_id=int(request.POST.get("movie")), defaults={'star_id': int(request.POST.get("star"))})
+        Rating.objects.update_or_create(ip=ip, movie_id=int(request.POST.get("movie")), defaults={'value': int(request.POST.get("star"))})
         return HttpResponse(status=201)
     else:
         return HttpResponse(status=400)
