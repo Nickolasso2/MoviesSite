@@ -3,7 +3,7 @@
     <ul class="pagination pagination-circle" style="float: none;">
         {% if page_obj.has_previous %}
         <li class="page-item">
-            <a class="page-link" href="?{{looking_for}}{{years}}{{genres}}page={{page_obj.previous_page_number}}">Previous</a>
+            <a class="page-link" href="?{{looking_for}}{{years}}{{searchGenre}}page={{page_obj.previous_page_number}}">Previous</a>
         </li>
         {% endif %}
         
@@ -13,7 +13,7 @@
                 <a class="page-link" href="#">{{p}}</a>
             </li>
         {% elif p > page_obj.number|add:-2 and p < page_obj.number|add:2 %}
-            <li class="page-item"><a class="page-link" href="?{{looking_for}}{{years}}{{genres}}page={{p}}">{{p}}</a></li>
+            <li class="page-item"><a class="page-link" href="?{{looking_for}}{{years}}{{searchGenre}}page={{p}}">{{p}}</a></li>
         {% endif %}
         {% endfor %}
         

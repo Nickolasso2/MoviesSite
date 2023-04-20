@@ -18,22 +18,22 @@ def get_client_ip(request):
             ip = request.META.get('REMOTE_ADDR')
         return ip
 
-class GenreYear:
+# class GenreYear:
 
-    def get_genres(self):
-        return Genre.objects.all()
+#     def get_genres(self):
+#         return Genre.objects.all()
 
-    def get_year(self):
-        return Movie.objects.filter(draft=False).values('year')
+#     def get_year(self):
+#         return Movie.objects.filter(draft=False).values('year')
 
 
-class MoviesView(GenreYear, ListView):
+class MoviesView(ListView):
     model = Movie
     paginate_by=3
     template_name= 'movies_app/collected.html'
 
     def get_queryset(self):
-        return Movie.objects.all().prefetch_related('actors', 'rating_set')
+        return Movie.objects.all().prefetch_related('actors','genres', 'rating_set')
 
 class CategoryMovieList(MoviesView):
     def get_queryset(self):
@@ -52,7 +52,7 @@ class MovieDetail(DetailView):
         context = super().get_context_data(**kwargs)
         # context['form'] = ReviewForm()
         context['form_mptt'] = ReviewFormMptt()
-        context['categories'] = Category.objects.all()
+        print(55,self.get_object())
         context['no_parent_review'] = self.object.reviewviamptt_set.filter(parent__isnull=True)  # passes review_set(query) with no parents
         context['star_form'] = RatingForm()
         
@@ -111,13 +111,13 @@ class FilterMovie(ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        if self.request.GET.getlist('genre') and self.request.GET.getlist('year'):
+        if self.request.GET.getlist('searchGenre') and self.request.GET.getlist('year'):
             queryset = Movie.objects.filter(year__in=self.request.GET.getlist(
-                'year'),genres__in=self.request.GET.getlist('genre'))
+                'year'),genres__in=self.request.GET.getlist('searchGenre'))
 
         else:
             queryset = Movie.objects.filter(Q(year__in=self.request.GET.getlist(
-                'year')) | Q(genres__in=self.request.GET.getlist('genre')))
+                'year')) | Q(genres__in=self.request.GET.getlist('searchGenre')))
 
         # queryset = Movie.objects.filter(Q(year__in=self.request.GET.getlist('year')) |  Q(genres__in=self.request.GET.getlist('genre')))
 

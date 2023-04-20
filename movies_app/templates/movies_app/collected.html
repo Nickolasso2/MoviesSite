@@ -25,13 +25,10 @@
                     <div class="product_price">
                         <div class="grid-price">
                             
-                            {% for genre in genres %}
+                            {% for genre in movie.genres.all %}
                             <span class="money editContent">{{genre}}</span>
                             {% endfor %}
                         </div>
-                       
-                       
-                       
                     </div>
                     <div class="product_price">
                         <div class="grid-price">

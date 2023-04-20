@@ -26,6 +26,17 @@
                     </div>
                     <div class="product_price">
                         <div class="grid-price">
+                            
+                            {% for genre in movie.genres.all %}
+                            <span class="money editContent">{{genre}}</span>
+                            {% endfor %}
+                        </div>
+                       
+                       
+                       
+                    </div>
+                    <div class="product_price">
+                        <div class="grid-price">
                             <span class="money editContent">{{ movie.country }}</span>
                         </div>
                     </div>
@@ -33,6 +44,14 @@
                         <div class="grid-price">
                             <span class="money editContent">{{ movie.year }}</span>
                         </div>
+                    </div>
+                    <div class="product_price">
+                       
+                        {% for actor in movie.actors.all %}
+                        <div class="grid-price">
+                            <a class="money editContent" href="{{actor.get_absolute_url}}">{{ actor }}</a>
+                        </div>
+                        {% endfor %}
                     </div>
                     <div class="product_price">
                         <div class="grid-price">
