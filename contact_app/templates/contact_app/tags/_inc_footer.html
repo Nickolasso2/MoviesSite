@@ -1,10 +1,10 @@
-{% comment %}
+<!-- {% comment %}
 connected to base.html with {% include %}
 rendered with include tag
-{% load my_tags %}
-{% categories as categories %}
-{% genres as genres %}
-{% endcomment %}
+
+{% endcomment %} -->
+
+{% load i18n %}
 
 <!-- Footer -->
 
@@ -24,7 +24,7 @@ rendered with include tag
              
               <div class="col-auto">
                 <p class="pt-2">
-                  <strong>Sign up for our newsletter</strong>
+                  <strong>{% trans 'Sign up for our newsletter' %}</strong>
                 </p>
               </div>
               
@@ -43,8 +43,8 @@ rendered with include tag
              
               <div class="col-auto">
                 
-                <button type="submit" class="btn btn-outline-light mb-4" id="subscriptionButton2">
-                  Subscribe
+                <button type="submit" class="btn btn-outline-light mb-4" id="subscriptionButton2">{% trans 'Subscribe' %}
+                  
                 </button>
                 
                 {% for error in form.non_field_errors %}
@@ -76,7 +76,7 @@ rendered with include tag
         <div class="row">
          
           <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-            <h5 class="text-uppercase">Categories</h5>
+            <h5 class="text-uppercase">{% trans 'Categories' %}</h5>
   
             <ul class="list-unstyled mb-0">
               
@@ -90,7 +90,7 @@ rendered with include tag
           </div>
          
           <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-            <h5 class="text-uppercase">Genres</h5>
+            <h5 class="text-uppercase">{% trans 'Genres' %}</h5>
   
             <ul class="list-unstyled mb-0">
               
@@ -110,15 +110,6 @@ rendered with include tag
               <li>
                 <a href="#!" class="text-white">Link 1</a>
               </li>
-              <li>
-                <a href="#!" class="text-white">Link 2</a>
-              </li>
-              <li>
-                <a href="#!" class="text-white">Link 3</a>
-              </li>
-              <li>
-                <a href="#!" class="text-white">Link 4</a>
-              </li>
             </ul>
           </div>
           
@@ -128,15 +119,6 @@ rendered with include tag
             <ul class="list-unstyled mb-0">
               <li>
                 <a href="#!" class="text-white">Link 1</a>
-              </li>
-              <li>
-                <a href="#!" class="text-white">Link 2</a>
-              </li>
-              <li>
-                <a href="#!" class="text-white">Link 3</a>
-              </li>
-              <li>
-                <a href="#!" class="text-white">Link 4</a>
               </li>
             </ul>
           </div>

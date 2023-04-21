@@ -20,7 +20,7 @@ class GenreTranslationOptions(TranslationOptions):
 
 @register(Movie)
 class MovieTranslationOptions(TranslationOptions):
-    fields = ('title', 'tagline', 'description', 'country')
+    fields = ('title', 'description', 'country')
 
 
 @register(MovieShot)

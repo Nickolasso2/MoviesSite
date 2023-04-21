@@ -221,7 +221,6 @@ INTERNAL_IPS = [
 
 LANGUAGES = [
     ('pl', _('Polish')),
-    ('de', _('German')),
     ('en', _('English')),
 ]
 

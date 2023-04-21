@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load my_tags i18n %}
+
+{% block content %}
+
+
+
+
+<div class="left-ads-display col-lg-9">
+    <div class="row">
+        <div class="row-md-4 product-men">
+            <div class="product-shoe-info editContent text-center mt-lg-4">
+                <div class="men-thumb-item">
+                    <img src="{{ actor.image.url }}" class="img-fluid" alt="" style="width: 250px;">
+                </div>
+                <div class="item-info-product">
+                    <h4 class="editContent">
+                         
+                            {{ actor.name }}</h4>
+                             ({% trans 'age' %}:{{actor.age}})
+                    
+                    <div class="product_price">
+                        <div class="grid-price">
+                            <span class="money editContent">{{ actor.description|safe}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+               
+            
+        </div>
+
+    </div>
+
+
+</div>
+{% endblock %}

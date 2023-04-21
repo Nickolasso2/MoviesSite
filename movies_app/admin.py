@@ -15,7 +15,6 @@ class CategoryAdmin(TranslationAdmin):
 
 class MovieAdminEditable(forms.ModelForm):
     description_pl = forms.CharField(widget=CKEditorUploadingWidget())
-    description_de = forms.CharField(widget=CKEditorUploadingWidget())
     description_en = forms.CharField(widget=CKEditorUploadingWidget())
 
     class Meta:
@@ -32,8 +31,8 @@ class MovieAdmin(TranslationAdmin):
     readonly_fields = ['get_poster']
     fieldsets = (
         ('Група 1', {'classes' : ('collapse',),
-            'fields' : (('title', 'tagline'),)}),
-        ('Група 2', {'fields' : (('poster', 'get_poster'), 'description', 'year', 'country', 'director', 'actors', 'genres', 'world_premiere', 'budget', 'fees_in_usa', 'category', 'url', 'draft')}),
+            'fields' : (('title'),)}),
+        ('Група 2', {'fields' : (('poster', 'get_poster'), 'description', 'year', 'country', 'actors', 'genres', 'world_premiere', 'budget', 'category', 'url', 'draft')}),
         )
     form = MovieAdminEditable
     

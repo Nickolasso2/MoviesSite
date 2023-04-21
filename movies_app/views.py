@@ -52,11 +52,11 @@ class MovieDetail(DetailView):
         context = super().get_context_data(**kwargs)
         # context['form'] = ReviewForm()
         context['form_mptt'] = ReviewFormMptt()
-        print(55,self.get_object())
+        # print(55,self.get_object())
         context['no_parent_review'] = self.object.reviewviamptt_set.filter(parent__isnull=True)  # passes review_set(query) with no parents
-        context['star_form'] = RatingForm()
-        
-        
+        context['star_form'] = RatingForm() 
+        context['rating'] = self.object.rating()       
+        print(58, Movie.objects.select_related()[0].category)
         try:
             star_given = Rating.objects.get(ip=get_client_ip(self.request), movie=self.object).value
             # якщо get() не знаходить екземпляр моделі, то видає помилку 
@@ -65,6 +65,8 @@ class MovieDetail(DetailView):
             context['star_given'] = 0
             
         return context
+    
+   
     
     
 
@@ -113,11 +115,11 @@ class FilterMovie(ListView):
     def get_queryset(self):
         if self.request.GET.getlist('searchGenre') and self.request.GET.getlist('year'):
             queryset = Movie.objects.filter(year__in=self.request.GET.getlist(
-                'year'),genres__in=self.request.GET.getlist('searchGenre'))
+                'year'),genres__in=self.request.GET.getlist('searchGenre')).prefetch_related('rating_set')
 
         else:
             queryset = Movie.objects.filter(Q(year__in=self.request.GET.getlist(
-                'year')) | Q(genres__in=self.request.GET.getlist('searchGenre')))
+                'year')) | Q(genres__in=self.request.GET.getlist('searchGenre'))).prefetch_related('rating_set', 'actors')
 
         # queryset = Movie.objects.filter(Q(year__in=self.request.GET.getlist('year')) |  Q(genres__in=self.request.GET.getlist('genre')))
 

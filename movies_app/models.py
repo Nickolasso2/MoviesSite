@@ -24,10 +24,10 @@ class Category(models.Model):
 
 class Actor(models.Model):
     # actors 
-    name = models.CharField('Ім\'я', max_length=100)
-    age = models.PositiveSmallIntegerField('Вік', default=0)
-    image = models.ImageField('Зображення', upload_to='actors/')
-    description = models.TextField('Опис')
+    name = models.CharField('Name', max_length=100)
+    age = models.PositiveSmallIntegerField('Age', default=0)
+    image = models.ImageField('Photo', upload_to='actors/')
+    description = models.TextField('Description')
 
     def __str__(self) -> str:
         return self.name
@@ -36,12 +36,12 @@ class Actor(models.Model):
         return reverse('actor', kwargs={'slug' : self.name})
 
     class Meta:
-        verbose_name = 'Актор'
-        verbose_name_plural = 'Актори'
+        verbose_name = 'Actor'
+        verbose_name_plural = 'Actors'
 
 class Genre(models.Model):
-    name = models.CharField('Назва', max_length=100)
-    description = models.TextField('Опис')
+    name = models.CharField('Genre', max_length=100)
+    description = models.TextField('Description')
     url =models.SlugField(max_length=160, unique=True)
 
     def get_absolute_url(self):
@@ -51,22 +51,19 @@ class Genre(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'Жанр'
-        verbose_name_plural = 'Жанри'
+        verbose_name = 'Genre'
+        verbose_name_plural = 'Genres'
 
 class Movie(models.Model):
-    title = models.CharField(verbose_name=_('Назва фільму'), max_length=100)#verbose_name=_('Назва фільму') повинно перекладати поля моделі в адмінці але не працює
-    tagline = models.CharField(verbose_name=_('Слоган'), max_length=100, default='')
-    description = models.TextField(verbose_name=_('Опис'))
-    poster = models.ImageField(verbose_name=_('Постер'), upload_to='movies/')
-    year = models.PositiveSmallIntegerField(verbose_name=_('Рік'))
-    country = models.CharField(verbose_name=_('Країна'), max_length=30)
-    director = models.ManyToManyField(Actor, verbose_name=_('Режисер'), related_name='film_director')
-    actors = models.ManyToManyField(Actor, verbose_name=_('Актори'), related_name='film_actors')
-    genres = models.ManyToManyField(Genre, verbose_name=_('Жанри'))
+    title = models.CharField(verbose_name=_('Film title'), max_length=100)#verbose_name=_('Назва фільму') повинно перекладати поля моделі в адмінці але не працює
+    description = models.TextField(verbose_name=_('Description'))
+    poster = models.ImageField(verbose_name=_('Poster'), upload_to='movies/')
+    year = models.PositiveSmallIntegerField(verbose_name=_('Year'))
+    country = models.CharField(verbose_name=_('Country'), max_length=30)
+    actors = models.ManyToManyField(Actor, verbose_name=_('Actors'), related_name='film_actors')
+    genres = models.ManyToManyField(Genre, verbose_name=_('Genres'))
     world_premiere =models.DateField( default=date.today)
-    budget = models.PositiveIntegerField(default=0, help_text='вказати суму в доларах США')
-    fees_in_usa = models.PositiveIntegerField('Fees', default=0, help_text='вказати суму в доларах США')
+    budget = models.PositiveIntegerField(default=0, help_text='dollarUS')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     url = models.SlugField(max_length=160, unique=True)
     draft = models.BooleanField(default=False)
@@ -79,8 +76,8 @@ class Movie(models.Model):
         return self.title
 
     class Meta:
-        verbose_name = 'Фільм'
-        verbose_name_plural = 'Фільми'
+        verbose_name = 'Movie'
+        verbose_name_plural = 'Movies'
 
     def get_absolute_url(self):
         return reverse('single_movie',kwargs={'slug':self.url})
@@ -101,37 +98,26 @@ class MovieShot(models.Model):
         verbose_name_plural = 'Кадри'
 
 
-# class RatingStar(models.Model):
-#     value = models.PositiveSmallIntegerField('Значення', default=0)
-
-#     def __str__(self) -> str:
-#         return f'{self.value}'
-
-#     class Meta:
-#         verbose_name = 'Зірка рейтингу'
-#         verbose_name_plural = 'Зірки рейтингу'
-#         ordering = ['-value']
-
 class Rating(models.Model):
-    ip = models.CharField('ip адреса', max_length=15)
-    value = models.PositiveSmallIntegerField('Значення', default=0)
+    ip = models.CharField('Ip', max_length=15)
+    value = models.PositiveSmallIntegerField('Star value', default=0)
     # star = models.ForeignKey(RatingStar, on_delete=models.CASCADE, verbose_name='зірка')
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, verbose_name='фільм')
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, verbose_name='Movie')
 
     def __str__(self) -> str:
         return f'{self.value} - {self.movie}' 
 
     class Meta:
-        verbose_name = 'Рейтинг'
-        verbose_name_plural = 'Рейтинги'
+        verbose_name = 'Rating'
+        verbose_name_plural = 'Ratings'
 
 
 class ReviewViaMptt(MPTTModel):
     email = models.EmailField()
     name = models.CharField(max_length=100)
     text = models.TextField(max_length=5000)
-    parent = TreeForeignKey('self', verbose_name='батько', on_delete=models.SET_NULL, null=True, blank=True, related_name='children')
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, verbose_name='фільм')
+    parent = TreeForeignKey('self', verbose_name='parent', on_delete=models.SET_NULL, null=True, blank=True, related_name='children')
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, verbose_name='film')
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self) -> str:

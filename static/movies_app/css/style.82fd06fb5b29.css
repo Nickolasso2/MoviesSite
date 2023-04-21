@@ -1,0 +1,50 @@
+
+div .form{
+    width: max-content;
+    padding: 30px;
+    background-color: bisque;
+}
+
+.navbar a {
+    color: brown;
+    font-size: 1.5em;
+}
+ul{
+    list-style-type: none;
+}
+
+.navbar-light .navbar-nav .nav-link{
+    color:crimson
+}
+.banner-info{
+    color:blanchedalmond;
+    position: absolute;
+    bottom: 30px;
+    left: 50px;
+    font:bold ;
+}
+.banner-info p {
+    
+    font-size: 1.5em;
+}
+
+#stars{
+    padding: 0 0 10px;
+}
+
+#nav{
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity:0.8; 
+    z-index: 1;
+}
+
+#rating_star{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+#rating_star img{
+    width: 40px;
+}

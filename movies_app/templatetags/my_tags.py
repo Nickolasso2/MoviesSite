@@ -21,9 +21,9 @@ def genres():
     return  genres
 
 @register.inclusion_tag('movies_app/star_rating.html')
-def rating(movie):
+def rating(rating):
       
-    return {'movie': movie}
+    return {'rating': rating}
 
   
 

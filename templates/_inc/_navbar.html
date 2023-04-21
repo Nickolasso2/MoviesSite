@@ -22,7 +22,7 @@
             </form>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="nav">
                 <div id="logo">
-                    <h1 >MovieWorld  </h1>
+                    <h1 >{% trans 'MovieWorld' %}  </h1>
                 </div>
                 <!-- nav -->
                     <!-- Container wrapper -->
@@ -45,7 +45,7 @@
                         <!-- Left links -->
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                           <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/">Home</a>
+                            <a class="nav-link" aria-current="page" href="/">{% trans 'Home' %}</a>
                           </li>
                           <li class="nav-item">
                             <a class="nav-link" href="#">Link</a>
@@ -60,7 +60,7 @@
                               data-mdb-toggle="dropdown"
                               aria-expanded="false"
                             >
-                              Categories
+                              {% trans 'Categories' %}
                             </a>
                             <!-- Dropdown menu -->
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -73,22 +73,22 @@
                                 
                               <li><hr class="dropdown-divider" /></li>
                               <li>
-                                <a class="dropdown-item" href="#">Something else here</a>
+                                <a class="dropdown-item" href="#">{% trans 'Something else here' %}</a>
                               </li>
                             </ul>
                           </li>
                           <li class="nav-item">
                             <a class="nav-link disabled"
-                              >Disabled</a
+                              >{% trans 'Disabled' %}</a
                             >
                           </li>
                           
                         
                             {% if user.is_authenticated %}
-                            <li class="nav-item"><a class="nav-link" href="{% url 'account_logout' %}">Log out</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'account_logout' %}">{% trans 'Log out' %}</a></li>
                         {% else %}
-                            <li class="nav-item"><a class="nav-link" href="{% url 'account_login' %}">Log in</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{% url 'account_signup' %}">Sign up</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'account_login' %}">{% trans 'Log in' %}</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'account_signup' %}">{% trans 'Sign up' %}</a></li>
                         {% endif %}
                         </ul>
                         <!-- Left links -->
@@ -97,17 +97,7 @@
                     </div>
                     <!-- Container wrapper -->
                   </nav>
-                <nav class="py-4">
-                    
-
-                    
-                            
-
-                            
-                                
-                            
-                         
-                                
+                <nav class="py-4">                               
                             </ul>
                             
                         </li>

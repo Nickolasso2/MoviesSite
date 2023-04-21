@@ -95,7 +95,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="
             <div class="container-fluid">
               <form class="d-flex" role="search" action="{% url 'search' %}" method="get">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="looking_for">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <button class="btn btn-outline-success" type="submit">{% trans 'Search' %}</button>
               </form>
             </div>
           </nav>

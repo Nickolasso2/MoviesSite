@@ -1,4 +1,5 @@
 <!-- added to base.html as a tamplatetag "show_sidebar" -->
+{% load i18n %}
 
 <div style="width: 150px; margin-right: 10vw;">
     <!-- форма рендерить шаблон ListView -->
@@ -6,7 +7,7 @@
 
         <!-- форма відправляється через ajax -->
     <!-- <form action="{% url 'filter_ajax' %}" method="get" name="filter_ajax"> -->
-        <ul>Жанри
+        <ul>{% trans 'Genres' %}
             {% for genre in genres %}
             <li>
                 <input type="checkbox" class="checked" name="searchGenre" value="{{genre.id}}">
@@ -14,7 +15,7 @@
             </li>
             {% endfor %}
         </ul>
-        <ul>Роки виходу
+        <ul>{% trans 'Release year' %}
             {% for year in years %}
             <li>
                 <input type="checkbox" class="checked" name="year" value="{{year}}">
@@ -22,7 +23,7 @@
             </li>
             {% endfor %}
         </ul>
-        <button type="submit">Пошук</button>
+        <button type="submit">{% trans 'Search' %}</button>
     </form>
 
 </div>
